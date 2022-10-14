@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: gulimall-coupon
+
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+#        配置命名空间，默认public，其他命名空间需要使用ID来指定
+        namespace: de671c57-8d12-46c1-a449-91d4261cf2a5
+        ext-config[0]:
+          data-id: gulimall-coupon.yml
+          group: dev
+          refresh: true
+#        group: dev
+

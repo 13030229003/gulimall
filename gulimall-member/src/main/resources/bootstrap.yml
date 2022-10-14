@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: gulimall-member
+
+  cloud:
+    nacos:
+      config:
+        server-addr: localhost:8848
+        namespace: f32bc27b-4bea-4708-ac88-4c4fb8b4ed50
+        ext-config[0]:
+          data-id: gulimall-member.yml
+          group: dev
+          refresh: true
+
