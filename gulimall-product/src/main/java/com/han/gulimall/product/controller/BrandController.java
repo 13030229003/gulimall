@@ -1,10 +1,14 @@
 package com.han.gulimall.product.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
 
+import com.han.gulimall.common.valid.AddGroup;
+import com.han.gulimall.common.valid.UpdateGroup;
 import com.han.gulimall.common.valid.UpdateStatusGroup;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -57,9 +61,33 @@ public class BrandController {
      * 保存
      */
     @RequestMapping("/save")
-    public R save(@RequestBody BrandEntity brand){
-		brandService.save(brand);
+    public R save(@Validated({AddGroup.class}) @RequestBody BrandEntity brand){
 
+        /** public R save(@Validated({AddGroup.class}) @RequestBody BrandEntity brand, BindingResult result)
+         * 统一异常处理，
+         *         HashMap<String, String> map = new HashMap<>();
+         *
+         *         //1、获取校验的错误结果
+         *         if (result.hasErrors()) {
+         *             result.getFieldErrors().forEach((item) ->{
+         *
+         *                 // 获取错误提示
+         *                 String message = item.getDefaultMessage();
+         *
+         *                 // 获取错误的属性的名字（类字段）
+         *                 String field = item.getField();
+         *
+         *                 map.put(field,message);
+         *
+         *             });
+         *             return R.error(400,"提交的数据不合法").put("data",map);
+         *         } else {
+         *             brandService.save(brand);
+         *             return R.ok();
+         *         }
+         */
+
+        brandService.save(brand);
         return R.ok();
     }
 
@@ -67,7 +95,7 @@ public class BrandController {
      * 修改
      */
     @RequestMapping("/update")
-    public R update(@RequestBody BrandEntity brand){
+    public R update(@Validated({UpdateGroup.class}) @RequestBody BrandEntity brand){
 		brandService.updateById(brand);
 
         return R.ok();

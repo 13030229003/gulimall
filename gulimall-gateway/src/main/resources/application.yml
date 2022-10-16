@@ -46,14 +46,23 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
 
+        - id: gulimall-third-part
+          uri: lb://gulimall-third-part
+          predicates:
+            - Path=/api/thirdpart/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+
 
         - id: renren-fast
           uri: lb://renren-fast
           predicates:
-            - Path=/**
+            - Path=/api/**
 #          路径转换
           filters:
             - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
+
+
 
 
 

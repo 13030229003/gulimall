@@ -2,7 +2,7 @@ package com.han.gulimall.common.exception;
 
 /**
  *
- * @author yaoxinjia
+ * @author xsh
  */
 public enum BizCodeEnum {
     UNKNOWN_EXCEPTION(10000,"系统未知错误"),

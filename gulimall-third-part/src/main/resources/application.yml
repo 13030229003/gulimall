@@ -1,0 +1,19 @@
+server:
+  port: 12000
+
+
+spring:
+  application:
+    name: gulimall-third-part
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+#        配置阿里云oss
+    alicloud:
+      access-key: LTAI5tDVZ8QkLCsrKYPxt1fz
+      secret-key: ihxyZqIYjuvoO5fwRQwsBac2XOAbaX
+      oss:
+        endpoint: oss-cn-guangzhou.aliyuncs.com
+        bucket: xushuhan-mall
+

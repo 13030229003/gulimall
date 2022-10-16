@@ -1,7 +1,7 @@
 package com.han.gulimall.common.valid;
 /**
  *
- * @author yaoxinjia
+ * @author xsh
  */
 public interface UpdateGroup {
 }
