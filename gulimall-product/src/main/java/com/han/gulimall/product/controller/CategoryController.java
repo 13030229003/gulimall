@@ -79,15 +79,27 @@ public class CategoryController {
         return R.ok();
     }
 
+//    /**
+//     * 修改
+//     */
+//    @RequestMapping("/update")
+//    public R update(@RequestBody CategoryEntity category){
+//
+////        System.out.println(category);
+//
+//		categoryService.updateById(category);
+//
+//        return R.ok();
+//    }
     /**
      * 修改
+     * @param category
+     * @return
+     *  更新分类，也将品牌和分类关联表中的名称也改变
      */
     @RequestMapping("/update")
     public R update(@RequestBody CategoryEntity category){
-
-//        System.out.println(category);
-
-		categoryService.updateById(category);
+        categoryService.updateCasecade(category);
 
         return R.ok();
     }

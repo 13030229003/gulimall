@@ -91,12 +91,26 @@ public class BrandController {
         return R.ok();
     }
 
+//    /**
+//     * 修改
+//     *
+//     */
+//    @RequestMapping("/update")
+//    public R update(@Validated({UpdateGroup.class}) @RequestBody BrandEntity brand){
+//		brandService.updateById(brand);
+//
+//        return R.ok();
+//    }
+
     /**
      * 修改
+     * @param brand
+     * @return
+     *  修改品牌名称的话， 需要将品牌和分类的关联表的冗余字段也进行修改。
      */
     @RequestMapping("/update")
-    public R update(@Validated({UpdateGroup.class}) @RequestBody BrandEntity brand){
-		brandService.updateById(brand);
+    public R update(@Validated({UpdateGroup.class}) @RequestBody BrandEntity brand) {
+        brandService.updateDetail(brand);
 
         return R.ok();
     }

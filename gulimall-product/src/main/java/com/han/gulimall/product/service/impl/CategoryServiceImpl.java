@@ -1,5 +1,9 @@
 package com.han.gulimall.product.service.impl;
 
+import com.han.gulimall.product.service.CategoryBrandRelationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,10 +21,15 @@ import com.han.gulimall.common.utils.Query;
 import com.han.gulimall.product.dao.CategoryDao;
 import com.han.gulimall.product.entity.CategoryEntity;
 import com.han.gulimall.product.service.CategoryService;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service("categoryService")
 public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService {
+
+    @Autowired
+    private CategoryBrandRelationService categoryBrandRelationService;
+
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -62,11 +71,26 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         List<Long> paths = new ArrayList<>();
         List<Long> parentPath = findParentPath(catelogId, paths);
 
+        //逆序转换
         Collections.reverse(parentPath);
         return parentPath.toArray(new Long[parentPath.size()]);
     }
 
-    //225,25,2
+    /**
+     * 级联更新所有关联的数据
+     *
+     * @param category
+     */
+    @CacheEvict(value = "category",allEntries = true)  // 失效模式
+    @CachePut // 双写模式
+    @Transactional
+    @Override
+    public void updateCasecade(CategoryEntity category) {
+        this.updateById(category);
+        categoryBrandRelationService.updateCategory(category.getCatId(), category.getName());
+    }
+
+    //225,25,2，需要进行逆序转换
     private List<Long> findParentPath(Long catelogId, List<Long> paths) {
         // 1 收集当前节点id
         paths.add(catelogId);
