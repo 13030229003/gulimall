@@ -18,7 +18,7 @@ spring:
         - id: gulimall-product
           uri: lb://gulimall-product
           predicates:
-            - Path=/api/product/**
+            - Path=/api/product/**,/hello
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
 
@@ -54,6 +54,15 @@ spring:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
 
 
+
+        - id: gulimall-search
+          uri: lb://gulimall-search
+          predicates:
+            - Path=/api/search/**
+          filters:
+            - RewritePath=/api/(?<segment>.*),/$\{segment}
+
+
         - id: renren-fast
           uri: lb://renren-fast
           predicates:
@@ -61,6 +70,12 @@ spring:
 #          路径转换
           filters:
             - RewritePath=/api/(?<segment>.*),/renren-fast/$\{segment}
+
+#           浏览器gulimall.com(修改本地的hosts文件，添加域名映射到虚拟机ip) -> 虚拟机nginx的80端口 -> 反向代理，负载均衡到网关  -> 网关将请求发送到gulimall-product
+        - id: gulimall_host_route
+          uri: lb://gulimall-product
+          predicates:
+            - Host=**.gulimall.com
 
 
 

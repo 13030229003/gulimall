@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import java.util.List;
 
 /**
- * @author yaoxinjia
+ * @author xsh
  */
 @FeignClient("gulimall-ware")
 public interface WareFeignService {

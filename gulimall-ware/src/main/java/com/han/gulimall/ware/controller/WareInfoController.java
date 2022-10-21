@@ -35,6 +35,9 @@ public class WareInfoController {
      */
     @RequestMapping("/list")
     public R list(@RequestParam Map<String, Object> params){
+
+//        System.out.println(params.toString());
+
         PageUtils page = wareInfoService.queryPage(params);
 
         return R.ok().put("page", page);

@@ -20,6 +20,12 @@ spring:
     time-zone: GMT+8
 
 
+#缓存
+  thymeleaf:
+    cache: true
+
+
+
 
 #2、配置mybatis-plus
 mybatis-plus:
@@ -32,3 +38,8 @@ mybatis-plus:
       #逻辑删除
       logic-delete-value: 1
       logic-not-delete-value: 0
+
+#  日志
+logging:
+  level:
+    com.han.gulimall: error

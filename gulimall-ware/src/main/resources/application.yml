@@ -15,6 +15,9 @@ spring:
     nacos:
       discovery:
         server-addr: localhost:8848
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 
 
 #2、配置mybatis-plus
@@ -28,3 +31,7 @@ mybatis-plus:
       #逻辑删除
       logic-delete-value: 1
       logic-not-delete-value: 0
+#日志输出
+logging:
+  level:
+    com.han: debug
