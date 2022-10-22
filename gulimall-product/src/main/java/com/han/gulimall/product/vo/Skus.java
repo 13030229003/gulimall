@@ -4,6 +4,7 @@
 package com.han.gulimall.product.vo;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -11,7 +12,8 @@ import java.util.List;
  * @author yaoxinjia
  */
 @Data
-public class Skus {
+public class Skus implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     private List<Attr> attr;
     private String skuName;

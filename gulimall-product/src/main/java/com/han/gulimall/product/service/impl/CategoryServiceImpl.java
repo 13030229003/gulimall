@@ -1,6 +1,10 @@
 package com.han.gulimall.product.service.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import com.han.gulimall.product.service.CategoryBrandRelationService;
+import com.han.gulimall.product.utils.RedisKeyUtils;
+import com.han.gulimall.product.utils.RedisUtil;
 import com.han.gulimall.product.vo.Catelog2Vo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -24,6 +28,7 @@ import com.han.gulimall.product.dao.CategoryDao;
 import com.han.gulimall.product.entity.CategoryEntity;
 import com.han.gulimall.product.service.CategoryService;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 
 @Service("categoryService")
@@ -32,6 +37,9 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     @Autowired
     private CategoryBrandRelationService categoryBrandRelationService;
 
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -136,11 +144,37 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
         return children;
     }
 
-
-
-//    @Cacheable(value = "category",key = "#root.methodName")
+        //TODO 产生堆外内存溢出：outofoirectMemoryError
+       //1）、springboot2.e以后默认使用Lettuce作为操作redis的客户端。它使用netty进行网络通信。
+       //2）、Lettuce的bug导致netty堆外内存溢出-Xmx300m；netty如果没有指定堆外内存，默认使用-Xmx300m
+      //可以通过-Dio.netty.maxDirectMemory进行设置
+      //解决方案：不能使用-Dio.netty.maxDirectNemory只去调大堆外内存。
+       //1）、升级Lettuce客户端。2）、切换使用jedis
     @Override
     public Map<String, List<Catelog2Vo>> getCatalogJson() {
+
+        // 从redis中获取category
+        String catalogJSON = (String)redisUtil.get(RedisKeyUtils.MAP_KEY_CATEGORY_JSON);
+
+        // 如果为空，就从数据库中获取，然后存入redis，再返回给前端
+        if (StringUtils.isEmpty(catalogJSON)) {
+            Map<String, List<Catelog2Vo>> catalogJsonForDb = getCatalogJsonForDb();
+            // 将Map转为String，然后存到redis中
+            String s = JSON.toJSONString(catalogJsonForDb);
+
+            redisUtil.set(RedisKeyUtils.MAP_KEY_CATEGORY_JSON,s);
+            // 返回Map
+            return catalogJsonForDb;
+        }
+        // redis中有数据，将数据转为Map，然后返回给前端
+        Map<String, List<Catelog2Vo>> result = JSON.parseObject(catalogJSON, new TypeReference<Map<String, List<Catelog2Vo>>>() {});
+        return result;
+
+    }
+
+//    @Cacheable(value = "category",key = "#root.methodName")
+
+    public Map<String, List<Catelog2Vo>> getCatalogJsonForDb() {
 //        System.out.println("查询了数据库......");
 
         List<CategoryEntity> selectList = baseMapper.selectList(null);

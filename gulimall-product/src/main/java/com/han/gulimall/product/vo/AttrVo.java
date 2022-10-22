@@ -3,6 +3,8 @@ package com.han.gulimall.product.vo;
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @PACKAGE_NAME: com.han.gulimall.product.vo
  * @Author XSH
@@ -11,7 +13,8 @@ import lombok.Data;
  * @Description：
  **/
 @Data
-public class AttrVo {
+public class AttrVo implements Serializable {
+    private static final long serialVersionUID = 1L;
     /**
      * 属性id
      */

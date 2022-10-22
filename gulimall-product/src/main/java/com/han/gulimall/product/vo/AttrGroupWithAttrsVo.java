@@ -4,13 +4,15 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.han.gulimall.product.entity.AttrEntity;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author yaoxinjia
  */
 @Data
-public class AttrGroupWithAttrsVo {
+public class AttrGroupWithAttrsVo implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     /**
      * 分组id

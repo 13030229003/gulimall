@@ -2,13 +2,15 @@ package com.han.gulimall.product.vo;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  * @author yaoxinjia
  */
 @Data
-public class SeckillSkuVo {
+public class SeckillSkuVo implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     /**
      * 活动id

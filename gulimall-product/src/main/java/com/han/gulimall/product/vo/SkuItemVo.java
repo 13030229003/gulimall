@@ -6,13 +6,15 @@ import com.han.gulimall.product.entity.SkuInfoEntity;
 import com.han.gulimall.product.entity.SpuInfoDescEntity;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * @author yaoxinjia
  */
 @Data
-public class SkuItemVo {
+public class SkuItemVo implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     //1、sku基本信息获取 pms_sku_info
     SkuInfoEntity info;
