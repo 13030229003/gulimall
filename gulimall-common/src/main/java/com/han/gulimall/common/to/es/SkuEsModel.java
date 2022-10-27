@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  *
- * @author yaoxinjia
+ * @author xsh
  */
 @Data
 public class SkuEsModel {

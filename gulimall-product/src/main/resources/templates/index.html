@@ -206,7 +206,7 @@
       <div class="header_main_left">
         <ul>
           <li  th:each="category : ${categorys}">
-            <a href="#" class="header_main_left_a"   th:attr="ctg-data = ${category.catId}"><b th:text="${category.name}">家用电器</b></a>
+            <a href="#" class="header_main_left_a"   th:attr="ctg-data = ${category.catId}"><b th:text="${category.name}"></b></a>
           </li>
         </ul>
       </div>
@@ -583,11 +583,11 @@
 
 </body>
 <script type="text/javascript">
-  // function search() {
-  //   var keyword=$("#searchText").val()
-  //   window.location.href="http://search.gulimall.com/list.html?keyword="+keyword;
-  // }
-  //
+  function search() {
+    var keyword=$("#searchText").val()
+    window.location.href="http://search.gulimall.com/list.html?keyword="+keyword;
+  }
+
   // $.get("http://seckill.gulimall.com/getCurrentSeckillSkus", function (res) {
   //   if (res.data.length > 0) {
   //     res.data.forEach(function (item) {

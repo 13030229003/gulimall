@@ -19,17 +19,25 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
 
-
-
-
 #缓存
   thymeleaf:
-    cache: true
+    cache: false
 #  redis
   redis:
     host: 192.168.19.130
     password: 123456
     port: 6379
+#    开启缓存，使用redis
+  cache:
+    type: redis
+#    设置缓存的存活时间
+    redis:
+      time-to-live: 600000  #毫秒为单位，10分钟
+#      如果指定了前缀，就是使用配置的，如果没有指定，就使用缓存的名字
+#      key-prefix: CACHE_ #给缓存的key配置前缀
+#      use-key-prefix: true #是否使用key的前缀，默认为true
+      # 是否缓存空值，解决缓存穿透
+      cache-null-values: true
 
 
 
@@ -50,3 +58,11 @@ mybatis-plus:
 logging:
   level:
     com.han.gulimall: error
+
+
+#异步线程的配置：com.han.gulimall.product.config.ThreadPoolConfigProperties
+gulimall:
+  thread:
+    core-size: 20
+    max-size: 200
+    keep-alive-time: 10

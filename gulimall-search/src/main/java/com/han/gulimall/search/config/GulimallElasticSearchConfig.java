@@ -8,7 +8,7 @@ import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.context.annotation.Bean;
 
 /**
- * @author yaoxinjia
+ * @author xsh
  */
 @SpringBootConfiguration
 public class GulimallElasticSearchConfig {

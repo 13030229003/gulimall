@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author yaoxinjia
+ * @author xsh
  */
 @Controller
 public class IndexController {
@@ -21,6 +21,7 @@ public class IndexController {
     @Autowired
     CategoryService categoryService;
     // 1 查询所有的1级分类
+
 
 
 
@@ -36,7 +37,7 @@ public class IndexController {
     }
 
     @ResponseBody
-    @GetMapping("/index/catalog.json")
+    @GetMapping("/home/catalog.json")
     public Map<String, List<Catelog2Vo>> getCatalogJson() {
 
         Map<String, List<Catelog2Vo>> catalogJson = categoryService.getCatalogJson();

@@ -2,9 +2,11 @@ package com.han.gulimall.product.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
+import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -31,6 +33,43 @@ public class RedisUtil {
         }
         return result;
     }
+
+    /**
+     * 分布式锁
+     * @param key
+     * @param value
+     * @return
+     */
+    public Boolean setNX(final String key, Object value) {
+        boolean result = false;
+        try {
+            ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
+            operations.setIfAbsent(key,value);
+            result = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    /**
+     * 分布式锁
+     * @param key
+     * @param value
+     * @return
+     */
+    public Boolean setNX(final String key, Object value, long expireTime, TimeUnit timeUnit) {
+        boolean result = false;
+        try {
+            ValueOperations<Serializable, Object> operations = redisTemplate.opsForValue();
+            operations.setIfAbsent(key,value,expireTime,timeUnit);
+            result = true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 
     /**
      * 写入缓存设置时效时间
