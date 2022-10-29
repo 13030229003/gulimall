@@ -16,4 +16,9 @@ spring:
       oss:
         endpoint: oss-cn-guangzhou.aliyuncs.com
         bucket: xushuhan-mall
+      sms:
+        host: http://dingxin.market.alicloudapi.com
+        path: /dx/sendSms
+        appCode: 60585ae5a76445b8badf93f727d36ec1
+        tpl_id: TP1711063
 

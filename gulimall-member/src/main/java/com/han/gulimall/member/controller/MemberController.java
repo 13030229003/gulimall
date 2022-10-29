@@ -1,21 +1,21 @@
 package com.han.gulimall.member.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
-import com.han.gulimall.member.config.UserProperties;
-import com.han.gulimall.member.feign.CouponFeignService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.han.gulimall.member.entity.MemberEntity;
-import com.han.gulimall.member.service.MemberService;
+import com.han.gulimall.common.exception.BizCodeEnum;
 import com.han.gulimall.common.utils.PageUtils;
 import com.han.gulimall.common.utils.R;
+import com.han.gulimall.member.config.UserProperties;
+import com.han.gulimall.member.entity.MemberEntity;
+import com.han.gulimall.member.exception.PhoneException;
+import com.han.gulimall.member.exception.UsernameException;
+import com.han.gulimall.member.feign.CouponFeignService;
+import com.han.gulimall.member.service.MemberService;
+import com.han.gulimall.member.vo.MemberUserLoginVo;
+import com.han.gulimall.member.vo.MemberUserRegisterVo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.Map;
 
 
 
@@ -38,14 +38,45 @@ public class MemberController {
     @Autowired
     private UserProperties userProperties;
 
-    @RequestMapping("/openFeignTest")
-    public R testOpenFeign() {
+    @PostMapping(value = "/register")
+    public R register(@RequestBody MemberUserRegisterVo vo) {
 
-        R r = couponFeignService.testOpenFeign();
+        try {
+            memberService.register(vo);
+        } catch (PhoneException e) {
+            return R.error(BizCodeEnum.PHONE_EXISTS_EXCEPTION.getCode(),BizCodeEnum.PHONE_EXISTS_EXCEPTION.getMsg());
+        } catch (UsernameException e) {
+            return R.error(BizCodeEnum.USER_EXISTS_EXCEPTION.getCode(),BizCodeEnum.USER_EXISTS_EXCEPTION.getMsg());
+        }
 
-        return R.ok().put("coupon",r.get("coupon")).put("user",userProperties);
-
+        return R.ok();
     }
+
+
+    @PostMapping(value = "/login")
+    public R login(@RequestBody MemberUserLoginVo vo) {
+
+        MemberEntity memberEntity = memberService.login(vo);
+
+        if (memberEntity != null) {
+            return R.ok().setData(memberEntity);
+        } else {
+            return R.error(BizCodeEnum.LOGIN_ACCOUNT_PASSWORD_INVALID.getCode(),BizCodeEnum.LOGIN_ACCOUNT_PASSWORD_INVALID.getMsg());
+        }
+    }
+
+
+
+
+
+//    @RequestMapping("/openFeignTest")
+//    public R testOpenFeign() {
+//
+//        R r = couponFeignService.testOpenFeign();
+//
+//        return R.ok().put("coupon",r.get("coupon")).put("user",userProperties);
+//
+//    }
 
 
 

@@ -38,6 +38,8 @@ spring:
 #      use-key-prefix: true #是否使用key的前缀，默认为true
       # 是否缓存空值，解决缓存穿透
       cache-null-values: true
+  session:
+    store-type: redis
 
 
 
