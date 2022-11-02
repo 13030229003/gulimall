@@ -21,6 +21,12 @@
 
     <dependencies>
 
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>com.han.gulimall</groupId>
             <artifactId>gulimall-common</artifactId>

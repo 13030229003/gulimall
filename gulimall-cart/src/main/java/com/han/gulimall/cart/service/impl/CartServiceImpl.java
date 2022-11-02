@@ -274,6 +274,7 @@ public class CartServiceImpl implements CartService {
                     .map(item -> {
                         //更新为最新的价格（查询数据库）
                         BigDecimal price = productFeignService.getPrice(item.getSkuId());
+//                        BigDecimal price = new BigDecimal(1000);
                         item.setPrice(price);
                         return item;
                     })

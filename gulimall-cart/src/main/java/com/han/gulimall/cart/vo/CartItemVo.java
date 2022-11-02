@@ -1,12 +1,15 @@
 package com.han.gulimall.cart.vo;
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.util.List;
 
 /**
  *
- * @author yaoxinjia
+ * @author xsh
  */
+@Data
 public class CartItemVo {
 
     private Long skuId;

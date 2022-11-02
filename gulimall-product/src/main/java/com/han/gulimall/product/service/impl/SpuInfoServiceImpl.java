@@ -74,6 +74,11 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
         return new PageUtils(page);
     }
+
+    /**
+     * 这里的并发量少，适合使用seata分布式事务来解决
+     * @param vo
+     */
     @Transactional
     @Override
     public void savaSpuInfo(SpuSaveVo vo) {
@@ -287,6 +292,16 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
 
         }
 
+    }
+
+    @Autowired
+    private SkuInfoService skuInfoServicel;
+
+    public SpuInfoEntity getSpuInfoBySkuId(Long skuId){
+        SkuInfoEntity skuInfoEntity = skuInfoServicel.getById(skuId);
+        Long spuId = skuInfoEntity.getSpuId();
+        SpuInfoEntity spuInfoEntity = this.getById(spuId);
+        return spuInfoEntity;
     }
 
 
