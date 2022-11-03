@@ -62,7 +62,6 @@ spring:
           filters:
             - RewritePath=/api/(?<segment>.*),/$\{segment}
 
-
         - id: renren-fast
           uri: lb://renren-fast
           predicates:
@@ -98,6 +97,12 @@ spring:
           predicates:
             - Host=order.gulimall.com
 
+
+
+        - id: gulimall_seckill_route
+          uri: lb://gulimall-seckill
+          predicates:
+            - Host=seckill.gulimall.com
 
   application:
     name: gulimall-gateway

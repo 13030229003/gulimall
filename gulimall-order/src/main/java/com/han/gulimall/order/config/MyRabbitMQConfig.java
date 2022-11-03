@@ -131,6 +131,10 @@ public class MyRabbitMQConfig {
         return queue;
     }
 
+    /**
+     *  交换机和商品秒杀队列绑定；都是使用一个交换机 Exchange orderEventExchange
+     * @return
+     */
     @Bean
     public Binding orderSecKillOrrderQueueBinding() {
         //String destination, DestinationType destinationType, String exchange, String routingKey,

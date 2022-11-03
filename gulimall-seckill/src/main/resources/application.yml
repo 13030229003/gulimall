@@ -1,0 +1,82 @@
+server:
+  port: 16000
+
+
+spring:
+  application:
+    name: gulimall-seckill
+#  1、配置数据库
+#  datasource:
+#    username: root
+#    password: han2020
+#    url: jdbc:mysql://localhost:3306/gulimall_pms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+#  jackson:
+#    date-format: yyyy-MM-dd HH:mm:ss
+#    time-zone: GMT+8
+
+#  配置定时任务的线程池数量 ，默认是只有一个线程。这里设置为5个
+#  task:
+#    scheduling:
+#      pool:
+#        size: 5
+
+#缓存
+  thymeleaf:
+    cache: false
+#  redis
+  redis:
+    host: 192.168.19.130
+    password: 123456
+    port: 6379
+  session:
+    store-type: redis #配置session的存储地方
+    redis:
+      namespace: spring:session #配置session存储在redis中的key前缀
+
+  #  配置rabbitmq
+  rabbitmq:
+    host: 192.168.19.130
+    port: 5672
+    virtual-host: /
+    #    开启发送端确认
+    publisher-confirms: true
+    #    开启发送端消息抵达队列的确认
+    publisher-returns: true
+    #    只要抵达队列，以异步方式优先回调我们这个returnconfirm
+    template:
+      mandatory: true
+    #      手动ack消息
+    listener:
+      simple:
+        acknowledge-mode: manual
+
+
+#2、配置mybatis-plus
+#mybatis-plus:
+#  mapper-locations: classpath:/mapper/**/*.xml
+#
+#  #设置实体类的自增主键
+#  global-config:
+#    db-config:
+#      id-type: auto
+#      #逻辑删除
+#      logic-delete-value: 1
+#      logic-not-delete-value: 0
+
+#  日志
+#logging:
+#  level:
+#    com.han.gulimall: error
+
+
+#异步线程的配置：com.han.gulimall.seckill.config.ThreadPoolConfigProperties
+#gulimall:
+#  thread:
+#    core-size: 20
+#    max-size: 200
+#    keep-alive-time: 10

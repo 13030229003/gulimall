@@ -1,46 +1,60 @@
-//package com.han.gulimall.order.web;
-//
+package com.han.gulimall.order.web;
+
 //import com.alipay.api.AlipayApiException;
 //import com.lly835.bestpay.config.WxPayConfig;
 //import com.lly835.bestpay.model.PayRequest;
 //import com.lly835.bestpay.model.PayResponse;
 //import com.lly835.bestpay.service.BestPayService;
 //import com.han.gulimall.order.config.AlipayTemplate;
-//import com.han.gulimall.order.entity.OrderEntity;
-//import com.han.gulimall.order.service.OrderService;
-//import com.han.gulimall.order.vo.PayVo;
-//import lombok.extern.slf4j.Slf4j;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.stereotype.Controller;
-//import org.springframework.ui.Model;
-//import org.springframework.web.bind.annotation.GetMapping;
-//import org.springframework.web.bind.annotation.RequestParam;
-//import org.springframework.web.bind.annotation.ResponseBody;
-//
-//import javax.annotation.Resource;
-//
+import com.han.gulimall.order.entity.OrderEntity;
+import com.han.gulimall.order.service.OrderService;
+import com.han.gulimall.order.vo.PayVo;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
+
 //import static com.lly835.bestpay.enums.BestPayTypeEnum.WXPAY_NATIVE;
-//
-///**
-// * @author yaoxinjia
-// * @email 894548575@qq.com
-// */
-//@Slf4j
-//@Controller
-//public class PayWebController {
-//
+
+/**
+ * @author yaoxinjia
+ * @email 894548575@qq.com
+ */
+@Slf4j
+@Controller
+public class PayWebController {
+
 //    @Autowired
 //    private AlipayTemplate alipayTemplate;
-//
-//    @Autowired
-//    private OrderService orderService;
-//
+
+    @Autowired
+    private OrderService orderService;
+
 //    @Autowired
 //    private BestPayService bestPayService;
 //
 //    @Resource
 //    private WxPayConfig wxPayConfig;
-//
+
+
+    @ResponseBody
+    @GetMapping(value = "/aliPayOrder",produces = "text/html")
+    public String aliPayOrder(@RequestParam("orderSn") String orderSn) {
+
+//        PayVo payVo = orderService.getOrderPay(orderSn);
+//        String pay = alipayTemplate.pay(payVo);
+        String pay = "success";
+        return pay;
+    }
+
+
+
+
 //    /**
 //     * 用户下单:支付宝支付
 //     * 1、让支付页让浏览器展示
@@ -58,8 +72,8 @@
 //        System.out.println(pay);
 //        return pay;
 //    }
-//
-//
+
+
 //    /**
 //     * 微信支付
 //     * @param orderSn
@@ -100,7 +114,7 @@
 //        log.info("查询支付记录...");
 //        return orderService.getOrderByOrderSn(orderId);
 //    }
-//
-//
-//
-//}
+
+
+
+}
